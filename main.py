@@ -12,6 +12,7 @@ def rename():
     info = f.from_file("flag.txt")
     print(info)
     fileopen =""
+    flag = False
     if info.find("POSIX") !=-1:
         fileopen="flag.tar.gz"
         copyfile("flag.txt", fileopen)
@@ -36,12 +37,17 @@ def rename():
         fileopen="flag.tar.xz"
         copyfile("flag.txt", fileopen)
         os.remove("flag.txt")
-
-        print (lzma.open('flag.tar.xz').read())
+        f = open('flag.txt', 'w+b')
+        f.write(lzma.open('flag.tar.xz').read())
+        f.close()
+        os.remove(fileopen)
+        flag = True
         fileopen=""
 
     if len(fileopen)>0:
         extract(fileopen)
+    if flag:
+        rename()
 
 def extract(fileopen):
 
