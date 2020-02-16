@@ -7,7 +7,8 @@ try:
 except ImportError:
     from backports import lzma
 
-
+#https://pypi.org/project/pyunpack/
+#https://github.com/ahupp/python-magic
 def xz(fileopen):
     f = open('./test/flag.txt', 'w+b')
     f.write(lzma.open(fileopen).read())
@@ -61,6 +62,7 @@ def extract(fileopen):
         Archive(fileopen).extractall('./test/')
     except:
         xz(fileopen)
+        #попытка исправить непонятный баг на данном этапе с распаковкой gzip
     os.remove(fileopen)
     try:
         copyfile("./test/flag", "./test/flag.txt")
