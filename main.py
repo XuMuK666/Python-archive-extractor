@@ -65,7 +65,8 @@ def extract(fileopen):
     try:
         copyfile("./test/flag", "./test/flag.txt")
         os.remove("./test/flag")
-        
+    except:
+        print("small error")
     copyfile("./test/flag.txt", "flag.txt")
     os.remove("./test/flag.txt")
 
