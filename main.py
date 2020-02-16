@@ -7,6 +7,13 @@ try:
 except ImportError:
     from backports import lzma
 
+
+def xz(fileopen):
+    f = open('./test/flag.txt', 'w+b')
+    f.write(lzma.open(fileopen).read())
+    f.close()
+
+
 def rename():
     f = magic.Magic(uncompress=True)
     info = f.from_file("flag.txt")
@@ -50,14 +57,15 @@ def rename():
         rename()
 
 def extract(fileopen):
-
-    Archive(fileopen).extractall('./test/')
+    try:
+        Archive(fileopen).extractall('./test/')
+    except:
+        xz(fileopen)
     os.remove(fileopen)
     try:
         copyfile("./test/flag", "./test/flag.txt")
         os.remove("./test/flag")
-    except:
-        print("small error")
+        
     copyfile("./test/flag.txt", "flag.txt")
     os.remove("./test/flag.txt")
 
